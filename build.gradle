@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.1.0'
+    }
+}
+
+plugins {
+    id 'java'
+}
+apply plugin: 'com.github.johnrengelman.shadow'
+
+group 'ru.tnkv'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.xerial:sqlite-jdbc:3.41.2.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ru.tnkv.ecserver.Main'
+        )
+    }
+}
+
+
+shadowJar {
+    manifest {
+        attributes 'Main-Class': 'ru.tnkv.ecserver.Main'
+    }
+}
