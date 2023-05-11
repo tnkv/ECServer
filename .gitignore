@@ -1,3 +1,4 @@
+ECServer.db
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
