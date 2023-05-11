@@ -26,15 +26,15 @@ public class GetReportsHandler implements HttpHandler {
                 for(Report report : Database.getReportList(args.get("token"))) {
                     reports.add(report.toJson());
                 }
-                res = "[\"{\"reports\":[" + String.join(",", reports) + "]}";
-                exchange.getResponseHeaders().put("Content-Type", Collections.singletonList("application/json"));
-                exchange.sendResponseHeaders(200, res.length());
+                res = "{\"reports\":[" + String.join(",", reports) + "]}";
+                exchange.getResponseHeaders().set("Content-Type", "application/json; charset=UTF-8");
+                exchange.sendResponseHeaders(200, 0);
                 OutputStream os = exchange.getResponseBody();
                 os.write(res.getBytes());
                 os.close();
             } else {
                 res = "[\"Введите поле token=, чтобы получить ответ.\"]";
-                exchange.sendResponseHeaders(200, res.length());
+                exchange.sendResponseHeaders(200, 0);
                 OutputStream os = exchange.getResponseBody();
                 os.write(res.getBytes());
                 os.close();
@@ -42,7 +42,7 @@ public class GetReportsHandler implements HttpHandler {
         } catch(SQLException e) {
             e.printStackTrace();
             res = "[\"Произошла ошибка. Сообщите об этом администратору.\"]";
-            exchange.sendResponseHeaders(200, res.length());
+            exchange.sendResponseHeaders(200, 0);
             OutputStream os = exchange.getResponseBody();
             os.write(res.getBytes());
             os.close();
